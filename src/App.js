@@ -21,17 +21,18 @@ class App extends Component {
 
     let todos = this.state.todoList.map((item,index)=>{
       return (
-        <li>
+        <li key={index}>
           <TodoItem todo={item}/>
         </li>
       )
     })
+    console.log(todos)
 
     return (
       <div className="App">
         <h1>我的待办</h1>
         <div className='inputWapper'>
-          <TodoInput content={this.state.newTodo} onSubmit={this.addTodo}/>
+          <TodoInput content={this.state.newTodo} onSubmit={this.addTodo.bind(this)}/>
         </div>
         <ol>
           {todos}
@@ -39,9 +40,25 @@ class App extends Component {
       </div>
     )
   }
-  addTodo(){
-    console.log('这里加了一个 todo')
+  addTodo(e){
+    this.state.todoList.push({
+      id: idMaker(),
+      title: e.target.value,
+      status: null,
+      deleted: false
+    })
+    this.setState({
+      newTodo: '',
+      todoList: this.state.todoList
+    })
   }
 }
 
 export default App;
+
+let id = 0
+
+function idMaker(){
+  id += 1
+  return id
+}
