@@ -32,13 +32,21 @@ class App extends Component {
       <div className="App">
         <h1>我的待办</h1>
         <div className='inputWapper'>
-          <TodoInput content={this.state.newTodo} onSubmit={this.addTodo.bind(this)}/>
+          <TodoInput content={this.state.newTodo} 
+          onSubmit={this.addTodo.bind(this)} 
+          onChange={this.changeTitle.bind(this)}/>
         </div>
         <ol>
           {todos}
         </ol>
       </div>
     )
+  }
+  changeTitle(e){
+    this.setState({
+      newTodo: e.target.value,
+      todoList: this.state.todoList
+    })
   }
   addTodo(e){
     this.state.todoList.push({
